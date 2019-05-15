@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>My Timesheet</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-button (click)="playTime()" fill="clear" size="large" *ngIf="!playSelected">
+    <ion-icon slot="icon-only" name="play-circle" class="playButtom"></ion-icon>
+  </ion-button>
+  <ion-button (click)="stopTime()" fill="clear" size="large" *ngIf="playSelected">
+    <ion-icon slot="icon-only" name="exit" class="stopButtom"></ion-icon>
+  </ion-button>
+
+  <app-collapsible-list [times]="times"></app-collapsible-list>
+
+  <ion-button (click)="openModal()" fill="clear" size="large">
+    <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+  </ion-button>
+
+</ion-content>

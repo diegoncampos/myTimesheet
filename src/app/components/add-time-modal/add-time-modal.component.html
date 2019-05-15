@@ -1,0 +1,43 @@
+<ion-header>
+  <ion-toolbar text-center color="primary">
+    <ion-title>
+      Add Time
+      <!-- <ion-button (click)="closeModal()" fill="clear" size="large">
+        <ion-icon slot="icon-only" name="close"></ion-icon>
+      </ion-button> -->
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row>
+      <ion-item>
+        <ion-label>Date</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="data.date"></ion-datetime>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-item>
+        <ion-label>Start Time</ion-label>
+        <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="data.startTime"></ion-datetime>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-item>
+        <ion-label>End Time</ion-label>
+        <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="data.endTime"></ion-datetime>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+        <ion-item>
+          <ion-input placeholder="Purchase Name" [(ngModel)]="data.note"></ion-input>
+        </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        <ion-button (click)="closeModal()">Add Time</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

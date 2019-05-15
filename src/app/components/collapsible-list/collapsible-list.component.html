@@ -1,0 +1,27 @@
+<ion-list *ngFor="let time of times; let i = index;" class="accordion-list" lines="none" detail="false" no-padding>
+  <ion-item tappable (click)="toggleSection(i)" [ngClass]="time.open ? 'item-active': 'item'">
+    <ion-icon slot="end" name="arrow-forward" *ngIf="!time.open"></ion-icon>
+    <ion-icon slot="end" name="arrow-down" *ngIf="time.open"></ion-icon>
+    <ion-label>
+      {{time.date | date :  "dd/MM/yyyy"}} - {{time.task}} -  {{time.startTime | date :  "HH:mm"}} - {{time.endTime | date :  "HH:mm"}}
+    </ion-label>
+  </ion-item>
+
+  <div *ngIf="time.open">
+    <ion-card>
+      <ion-card-content>
+        <ion-item>
+          <ion-label>
+            Earned Today: ${{time.earned}}
+          </ion-label>
+        </ion-item>
+        <ion-item>
+          <ion-label>
+            Note: {{time.note}}
+          </ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+</ion-list>

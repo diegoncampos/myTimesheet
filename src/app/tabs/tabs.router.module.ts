@@ -8,29 +8,29 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
+        path: 'home',
         children: [
           {
             path: '',
-            loadChildren: '../tab1/tab1.module#Tab1PageModule'
+            loadChildren: '../pages/home/home.module#HomePageModule'
           }
         ]
       },
       {
-        path: 'tab2',
+        path: 'timesheetCalendar',
         children: [
           {
             path: '',
-            loadChildren: '../tab2/tab2.module#Tab2PageModule'
+            loadChildren: '../pages/timesheet-calendar/timesheet-calendar.module#TimesheetCalendarPageModule'
           }
         ]
       },
       {
-        path: 'tab3',
+        path: 'aboutMe',
         children: [
           {
             path: '',
-            loadChildren: '../tab3/tab3.module#Tab3PageModule'
+            loadChildren: '../pages/about-me/about-me.module#AboutMePageModule'
           }
         ]
       },
@@ -43,7 +43,7 @@ const routes: Routes = [
   },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
+    redirectTo: '/tabs/home',
     pathMatch: 'full'
   }
 ];
