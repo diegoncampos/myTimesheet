@@ -8,6 +8,15 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
+        path: 'tasks',
+        children: [
+          {
+            path: '',
+            loadChildren: '../pages/tasks/tasks.module#TasksPageModule'
+          }
+        ]
+      },
+      {
         path: 'home',
         children: [
           {
@@ -36,14 +45,14 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: '/tabs/tasks',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/home',
+    redirectTo: '/tabs/tasks',
     pathMatch: 'full'
   }
 ];

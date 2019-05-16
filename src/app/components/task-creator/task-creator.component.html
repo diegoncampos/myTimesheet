@@ -1,0 +1,50 @@
+<ion-header>
+    <ion-toolbar text-center color="primary">
+      <ion-title>
+        Task
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+  
+  <ion-content padding>
+    <ion-grid>
+      <ion-row>
+        <ion-item>
+          <ion-input placeholder="Task Name" [(ngModel)]="task.name"></ion-input>
+        </ion-item>
+      </ion-row>
+      <ion-row>
+          <ion-item>
+            <ion-input placeholder="Hourly Rate $" [(ngModel)]="task.hourlyRate"></ion-input>
+          </ion-item>
+        </ion-row>
+        <ion-row>
+            <ion-item>
+              <ion-select placeholder="Week Start Day" [(ngModel)]="task.weekStartDay">
+                  <ion-select-option *ngFor="let day of days" value="{{day.value}}">{{day.name}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+          </ion-row>
+          <ion-row>
+              <ion-item>
+                <ion-input placeholder="Tax %" [(ngModel)]="task.taxPercentage"></ion-input>
+              </ion-item>
+            </ion-row>
+            <ion-row>
+                <ion-item>
+                    <ion-label class="specialDayLabel">Does Holiday Pay Apply?</ion-label>
+                  <ion-checkbox [(ngModel)]="task.specialDay"></ion-checkbox>
+                </ion-item>
+              </ion-row>
+              <ion-row>
+                  <ion-item>
+                    <ion-input disabled="{{!task.specialDay}}" placeholder="Special Day %" [(ngModel)]="task.specialDayPercentage"></ion-input>
+                  </ion-item>
+                </ion-row>
+      <ion-row>
+        <ion-col text-center>
+          <ion-button (click)="closeModal()">Add Task</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    </ion-content>

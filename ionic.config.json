@@ -1,5 +1,7 @@
 {
   "name": "myTimesheet",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
