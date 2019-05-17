@@ -28,7 +28,7 @@ export class TasksPage implements OnInit {
   ngOnInit() { }
 
   ionViewWillEnter() {  // each time you enter to tab call ionViewWillEnter()
-    this.checkValue();
+    this.getDataBase();
   }
 
   async addTask() {
@@ -46,7 +46,7 @@ export class TasksPage implements OnInit {
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       console.log("ACA TA LA INFO:", detail.data)
       this.tasks.push(detail.data);
-      this.setValue();
+      this.updateDataBase();
     });
 
     return await modal.present();
@@ -56,27 +56,30 @@ export class TasksPage implements OnInit {
   onTaskSelected(index) {
     let id = this.tasks[index].id;
     let name = this.tasks[index].name;
-    console.log("Seleciono:", this.tasks[index].id)
     this.nav.navigateForward(`tabs/home/${id}/${name}`);
   }
 
   delTask(index) {
     console.log("Borrada tarea:", this.tasks[index].name)
+    let id = this.tasks[index].id;
+    this.dataService.remove(id).then((val) => {
+      console.log("Removed");
+    });
     this.tasks.splice(index, 1);
-    this.setValue();
+    this.updateDataBase();
   }
 
   editTask(index) {
     console.log("Editar tarea:", this.tasks[index].name)
   }
 
-  setValue() {
+  updateDataBase() {
     this.dataService.set('tasksList', this.tasks).then((val) => {
       console.log("Set:", val);
     });
   }
 
-  checkValue() {
+  getDataBase() {
     this.dataService.get('tasksList').then((val) => {
       if (val) {
         this.tasks = val;
