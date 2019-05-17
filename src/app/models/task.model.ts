@@ -1,5 +1,6 @@
 export interface Task {
     name: string;
+    id: string;
     hourlyRate: number;
     weekStartDay: number;
     taxPercentage?: number;

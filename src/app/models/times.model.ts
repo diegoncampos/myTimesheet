@@ -1,9 +1,9 @@
 export interface Times {
-    date: string;
+    startDate: string;
     startTime: string;
-    endTime: string;
+    endDate?: string;
+    endTime?: string;
     note?: string;
-    task: string;
+    specialDay?: boolean;
     open?: boolean;
-    earned?: any;
   }

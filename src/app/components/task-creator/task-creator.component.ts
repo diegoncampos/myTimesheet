@@ -10,7 +10,7 @@ import { ModalController } from '@ionic/angular';
 })
 export class TaskCreatorComponent implements OnInit {
 
-  public task:Task = {name: '', hourlyRate: null, weekStartDay: null, taxPercentage: null, specialDay: false, specialDayPercentage: null};
+  public task:Task = {name: '', id: null, hourlyRate: null, weekStartDay: null, taxPercentage: null, specialDay: false, specialDayPercentage: null};
   public days = [
     {name: 'Monday', value:0},
     {name: 'Tuesday', value:1},
@@ -26,6 +26,7 @@ export class TaskCreatorComponent implements OnInit {
   ngOnInit() {}
 
   async closeModal() {
+    this.task['id'] = this.task.name.replace(/ /g, "");
     const onClosedData: any = this.task;
     await this.modalController.dismiss(onClosedData);
   }

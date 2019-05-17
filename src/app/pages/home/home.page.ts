@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Times } from '../../models/times.model';
 import { ModalController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 
 import { AddTimeModalComponent } from '../../components/add-time-modal/add-time-modal.component';
 import { OverlayEventDetail } from '@ionic/core';
@@ -9,6 +10,7 @@ import { myEnterAnimation } from '../../animations/enter';
 import { myLeaveAnimation } from '../../animations/leave';
 
 import * as moment from 'moment';
+import { DataService } from '../../services/data.service'
 
 @Component({
   selector: 'app-home',
@@ -16,19 +18,32 @@ import * as moment from 'moment';
   styleUrls: ['./home.page.scss'],
 })
 export class HomePage implements OnInit {
+
+  receivedId:any = null;
+  taskName:any = null;
   times:Times[] = [];//{date:"", startTime: "", endTime:"", note: "", task: ""};
   playSelected:boolean = false;
 
-  constructor(public modalController: ModalController) {
-    this.times = [
-      {date:"01/01/2019", startTime: "2019-04-15T08:00:01.613+12:00", endTime:"2019-04-15T18:00:01.613+12:00", note: "Esto es una nota", task: "box maker", open: false, earned: "25"},
-      {date:"02/02/2019", startTime: "2019-04-15T08:15:01.613+12:00", endTime:"2019-04-15T18:15:01.613+12:00", note: "Este dia no trabaje nada!!", task: "box maker", open: false, earned: "10"},
-      {date:"03/03/2019", startTime: "2019-04-15T08:30:01.613+12:00", endTime:"2019-04-15T19:58:01.613+12:00", note: "Berni se la come doblada!!", task: "box maker", open: false, earned: "100"}
-    ]
+  constructor(
+    public modalController: ModalController,
+    private activateRoute: ActivatedRoute,
+    private dataService: DataService,
+    ) {
+    // this.times = [
+    //   {startDate:"01/01/2019", startTime: "2019-04-15T08:00:01.613+12:00", endDate:"2019-04-15T18:00:01.613+12:00", endTime:"2019-04-15T18:00:01.613+12:00", note: "Esto es una nota", open: false},
+    //   {startDate:"02/02/2019", startTime: "2019-04-15T08:15:01.613+12:00", endDate:"2019-04-15T18:00:01.613+12:00", endTime:"2019-04-15T18:15:01.613+12:00", note: "Este dia no trabaje nada!!", open: false},
+    //   {startDate:"03/03/2019", startTime: "2019-04-15T08:30:01.613+12:00", endDate:"2019-04-15T18:00:01.613+12:00", endTime:"2019-04-15T19:58:01.613+12:00", note: "Berni se la come doblada!!", open: false}
+    // ]
 
    }
 
   ngOnInit() {
+    this.receivedId = this.activateRoute.snapshot.paramMap.get('taskId');
+    this.taskName = this.activateRoute.snapshot.paramMap.get('taskName');
+  }
+
+  ionViewWillEnter() {  // each time you enter to tab call ionViewWillEnter()
+    this.getDataBase();
   }
 
   async openModal() {
@@ -44,9 +59,10 @@ export class HomePage implements OnInit {
       });
 
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
-      if (detail !== null) {
+      if (detail !== null && detail.data) {
         console.log('The result:', detail.data);
-        this.times.push(detail.data)
+        this.times.push(detail.data);
+        this.updateDataBase();
       }
     });
 
@@ -55,19 +71,33 @@ export class HomePage implements OnInit {
 
   playTime() {
     // If current date is on the list cant add again
-    let today = this.times.find(o => moment(o.date).format("YYYY-MM-DD") === moment(new Date()).format("YYYY-MM-DD"));
+    let today = this.times.find(o => moment(o.startDate).format("YYYY-MM-DD") === moment(new Date()).format("YYYY-MM-DD"));
     if (!today) {
       this.times.push(
         {
-          date: new Date().toISOString(),
+          startDate: new Date().toISOString(),
           startTime: new Date().toISOString(),
           endTime: '',
-          note: '',
-          task: 'box maker'
+          note: ''
         }
       )
       this.playSelected = true;
     }
+  }
+
+  getDataBase() {
+    this.dataService.get(this.receivedId).then((val) => {
+      if (val) {
+        this.times = val;
+      }
+      console.log("Check:", val)
+    })
+  }
+
+  updateDataBase() {
+    this.dataService.set(this.receivedId, this.times).then((val) => {
+      console.log("Set:", val);
+    });
   }
 
 }

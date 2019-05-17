@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
 import { Times } from '../../models/times.model';
 
 @Component({
@@ -10,12 +10,14 @@ export class CollapsibleListComponent implements OnInit {
   automaticClose:boolean = true;
   private _times:Times[] = [];
 
-  // Input with Setter method
-  @Input()
-  set times(times: Times[]) {
-    this._times = times && times.length > 0? times : [];
-  }
-  get times() { return this._times; }
+  // Input with ngOnChange
+  @Input() times: Times[];
+
+  // ngOnChanges(changes: SimpleChanges): void {
+    // if(changes['times']) {
+    //   console.log("ACAA", changes['times'].currentValue)
+    // }
+  // }
 
   constructor() { }
 

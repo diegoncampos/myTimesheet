@@ -13,8 +13,8 @@
   <ion-grid>
     <ion-row>
       <ion-item>
-        <ion-label>Date</ion-label>
-        <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="data.date"></ion-datetime>
+        <ion-label>Start Date</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="data.startDate"></ion-datetime>
       </ion-item>
     </ion-row>
     <ion-row>
@@ -25,18 +25,27 @@
     </ion-row>
     <ion-row>
       <ion-item>
+        <ion-label>End Date</ion-label>
+        <ion-datetime displayFormat="DD/MM/YYYY" [(ngModel)]="data.endDate"></ion-datetime>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-item>
         <ion-label>End Time</ion-label>
         <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" [(ngModel)]="data.endTime"></ion-datetime>
       </ion-item>
     </ion-row>
     <ion-row>
-        <ion-item>
-          <ion-input placeholder="Purchase Name" [(ngModel)]="data.note"></ion-input>
-        </ion-item>
+      <ion-item>
+        <ion-input placeholder="Purchase Name" [(ngModel)]="data.note"></ion-input>
+      </ion-item>
     </ion-row>
     <ion-row>
       <ion-col text-center>
-        <ion-button (click)="closeModal()">Add Time</ion-button>
+        <ion-button (click)="addCloseModal()">Add Time</ion-button>
+      </ion-col>
+      <ion-col text-center>
+        <ion-button (click)="cancelCloseModal()">Cancel</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>

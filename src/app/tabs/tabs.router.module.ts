@@ -17,7 +17,7 @@ const routes: Routes = [
         ]
       },
       {
-        path: 'home',
+        path: 'home/:taskId/:taskName',
         children: [
           {
             path: '',

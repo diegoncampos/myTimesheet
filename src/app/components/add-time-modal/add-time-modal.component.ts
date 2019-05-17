@@ -19,11 +19,11 @@ export class AddTimeModalComponent implements OnInit {
 
   constructor(private modalController: ModalController, private navParams: NavParams) {
     this.data = {
-      date: new Date().toISOString(),
+      startDate: new Date().toISOString(),
       startTime: new Date().toISOString(),
+      endDate: '',
       endTime: '',
-      note: '',
-      task: 'box maker'
+      note: ''
     };
   }
 
@@ -34,9 +34,13 @@ export class AddTimeModalComponent implements OnInit {
     this.modalTitle = this.navParams.data.paramTitle;
   }
 
-  async closeModal() {
+  async addCloseModal() {
     const onClosedData: any = this.data;
     await this.modalController.dismiss(onClosedData);
+  }
+  async cancelCloseModal() {
+    const onClosedData: any = this.data;
+    await this.modalController.dismiss();
   }
 
 }
