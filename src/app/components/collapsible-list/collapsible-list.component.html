@@ -1,5 +1,5 @@
 <ion-list *ngFor="let time of times; let i = index;" class="accordion-list" lines="none" detail="false" no-padding>
-  <ion-item tappable (click)="toggleSection(i)" [ngClass]="time.open ? 'item-active': 'item'">
+  <ion-item tappable (click)="toggleSection(i)" [ngClass]="time.open ? 'item-active': 'item'" (press)="selectItem(i)">
     <ion-icon slot="end" name="arrow-forward" *ngIf="!time.open"></ion-icon>
     <ion-icon slot="end" name="arrow-down" *ngIf="time.open"></ion-icon>
     <ion-label>

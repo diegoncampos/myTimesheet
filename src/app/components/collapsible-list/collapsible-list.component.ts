@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, SimpleChanges } from '@angular/core';
+import { Component, OnInit, Input, SimpleChanges, Output, EventEmitter } from '@angular/core';
 import { Times } from '../../models/times.model';
 
 @Component({
@@ -12,6 +12,7 @@ export class CollapsibleListComponent implements OnInit {
 
   // Input with ngOnChange
   @Input() times: Times[];
+  @Output() itemSelected = new EventEmitter();
 
   // ngOnChanges(changes: SimpleChanges): void {
     // if(changes['times']) {
@@ -28,7 +29,10 @@ export class CollapsibleListComponent implements OnInit {
     if (this.automaticClose && this.times[index].open) {
       this.times.filter((item, itemIndex) => itemIndex != index).map(item => item.open = false);
     }
+  }
 
+  selectItem(index) {
+    this.itemSelected.emit(index);
   }
 
 }

@@ -1,7 +1,7 @@
 <ion-header>
   <ion-toolbar text-center color="primary">
     <ion-title>
-      Add Time
+      {{title}}
       <!-- <ion-button (click)="closeModal()" fill="clear" size="large">
         <ion-icon slot="icon-only" name="close"></ion-icon>
       </ion-button> -->
@@ -37,12 +37,15 @@
     </ion-row>
     <ion-row>
       <ion-item>
-        <ion-input placeholder="Purchase Name" [(ngModel)]="data.note"></ion-input>
+        <ion-input placeholder="Note" [(ngModel)]="data.note"></ion-input>
       </ion-item>
     </ion-row>
     <ion-row>
-      <ion-col text-center>
+      <ion-col text-center *ngIf="!editMode">
         <ion-button (click)="addCloseModal()">Add Time</ion-button>
+      </ion-col>
+      <ion-col text-center *ngIf="editMode">
+        <ion-button (click)="addCloseModal()">Update Time</ion-button>
       </ion-col>
       <ion-col text-center>
         <ion-button (click)="cancelCloseModal()">Cancel</ion-button>

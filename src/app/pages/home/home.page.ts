@@ -22,6 +22,7 @@ export class HomePage implements OnInit {
   receivedId:any = null;
   taskName:any = null;
   times:Times[] = [];//{date:"", startTime: "", endTime:"", note: "", task: ""};
+  isOneWeek: boolean;
   playSelected:boolean = false;
 
   constructor(
@@ -46,13 +47,12 @@ export class HomePage implements OnInit {
     this.getDataBase();
   }
 
-  async openModal() {
+  async addModal() {
     const modal: HTMLIonModalElement =
       await this.modalController.create({
         component: AddTimeModalComponent,
         componentProps: {
-          "paramID": 123,
-          "paramTitle": "Test Title"
+          "title": "Add Time",
         },
         enterAnimation: myEnterAnimation,
         leaveAnimation: myLeaveAnimation
@@ -61,8 +61,11 @@ export class HomePage implements OnInit {
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail !== null && detail.data) {
         console.log('The result:', detail.data);
-        this.times.push(detail.data);
-        this.updateDataBase();
+        if (!this.isOneWeek) {
+          this.times.push(detail.data);
+          this.updateDataBase();
+          this.isOneWeekCheck();
+        }
       }
     });
 
@@ -89,6 +92,7 @@ export class HomePage implements OnInit {
     this.dataService.get(this.receivedId).then((val) => {
       if (val) {
         this.times = val;
+        this.isOneWeekCheck();
       }
       console.log("Check:", val)
     })
@@ -98,6 +102,34 @@ export class HomePage implements OnInit {
     this.dataService.set(this.receivedId, this.times).then((val) => {
       console.log("Set:", val);
     });
+  }
+
+  isOneWeekCheck(){
+    this.isOneWeek = this.times.length === 7;
+  }
+
+  async selectedItemToEdit(index) {
+    console.log("ACAAAA", index)
+    const modal: HTMLIonModalElement =
+      await this.modalController.create({
+        component: AddTimeModalComponent,
+        componentProps: {
+          "title": "Edit Time",
+          "item": this.times[index]
+        },
+        enterAnimation: myEnterAnimation,
+        leaveAnimation: myLeaveAnimation
+      });
+
+    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+      if (detail !== null && detail.data) {
+        console.log("Detail", detail)
+        this.times[index]  = detail.data;
+        this.updateDataBase();
+      }
+    });
+
+    return await modal.present();
   }
 
 }

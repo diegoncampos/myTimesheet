@@ -16,9 +16,9 @@
     <ion-icon slot="icon-only" name="exit" class="stopButtom"></ion-icon>
   </ion-button>
 
-  <app-collapsible-list [times]="times"></app-collapsible-list>
+  <app-collapsible-list [times]="times" (itemSelected)="selectedItemToEdit($event)"></app-collapsible-list>
 
-  <ion-button (click)="openModal()" fill="clear" size="large">
+  <ion-button (click)="addModal()" fill="clear" size="large" *ngIf="!isOneWeek">
     <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
   </ion-button>
 

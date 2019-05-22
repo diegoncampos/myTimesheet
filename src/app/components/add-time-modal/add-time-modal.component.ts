@@ -10,9 +10,11 @@ import { Times } from '../../models/times.model';
 })
 export class AddTimeModalComponent implements OnInit {
 
-  modalTitle:string;
-  modelId:number;
+  // modalTitle:string;
+  // modelId:number;
   data: Times;
+  tittle: string;
+  editMode: boolean = false;
   // date: String = new Date().toISOString();
   // startTime: String = new Date().toISOString();
   // finishTime: String;
@@ -28,10 +30,15 @@ export class AddTimeModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.navParams);
-    console.table(this.navParams);
-    this.modelId = this.navParams.data.paramID;
-    this.modalTitle = this.navParams.data.paramTitle;
+    // console.log(this.navParams);
+    // console.table(this.navParams);
+    // this.modelId = this.navParams.data.paramID;
+    // this.modalTitle = this.navParams.data.paramTitle;
+    this.tittle = this.navParams.data.tittle;
+    if(this.navParams.data.item){
+      this.editMode = true;
+      this.data = this.navParams.data.item;
+    }
   }
 
   async addCloseModal() {
