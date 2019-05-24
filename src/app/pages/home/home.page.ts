@@ -123,7 +123,6 @@ export class HomePage implements OnInit {
 
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail !== null && detail.data) {
-        console.log("Detail", detail)
         this.times[index]  = detail.data;
         this.updateDataBase();
       }
