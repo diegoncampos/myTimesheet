@@ -16,7 +16,26 @@
     <ion-icon slot="icon-only" name="exit" class="stopButtom"></ion-icon>
   </ion-button>
 
-  <app-collapsible-list [times]="times" (itemSelected)="selectedItemToEdit($event)"></app-collapsible-list>
+  <!-- <app-collapsible-list [times]="times" (itemSelected)="selectedItemToEdit($event)"></app-collapsible-list> -->
+  <div (swipe)="swipe($event)">
+    <div class="week-header">
+      <ion-row class="calendar-week">
+        <ion-col col-2 size="2" class="ion-text-start" (click)="goToLastWeek()">
+          <ion-icon name="arrow-back"></ion-icon>
+        </ion-col>
+        <ion-col col-8 size="8" class="ion-text-center">{{beginningOfWeek}} - {{endOfWeek}}</ion-col>
+        <ion-col col-2 size="2" class="ion-text-end" (click)="goToNextWeek()">
+          <ion-icon align-self-end name="arrow-forward"></ion-icon>
+        </ion-col>
+      </ion-row>
+    </div>
+    <div class="week-body">
+      <app-collapsible-list [times]="times" (itemSelected)="selectedItemToEdit($event)"></app-collapsible-list>
+    </div>
+  </div>
+
+
+  <!-- FIN -->
 
   <ion-button (click)="addModal()" fill="clear" size="large" *ngIf="!isOneWeek">
     <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>

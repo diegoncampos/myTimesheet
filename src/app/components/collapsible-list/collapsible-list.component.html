@@ -3,7 +3,7 @@
     <ion-icon slot="end" name="arrow-forward" *ngIf="!time.open"></ion-icon>
     <ion-icon slot="end" name="arrow-down" *ngIf="time.open"></ion-icon>
     <ion-label>
-      {{time.startDate | date :  "dd/MM/yyyy"}}  -  {{time.startTime | date :  "HH:mm"}} - {{time.endTime | date :  "HH:mm"}}
+      {{time.startDate | date :  "E dd/MM/yyyy"}}  -  {{time.startTime | date :  "HH:mm"}} - {{time.endTime | date :  "HH:mm"}}
     </ion-label>
   </ion-item>
 

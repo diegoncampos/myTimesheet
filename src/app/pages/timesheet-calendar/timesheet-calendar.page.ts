@@ -9,7 +9,7 @@ export class TimesheetCalendarPage implements OnInit {
 
   isToday:boolean;
   calendar = {
-    mode: 'month',
+    mode: 'week',
     currentDate: new Date(),
     dateFormatter: {
         formatMonthViewDay: function(date:Date) {
