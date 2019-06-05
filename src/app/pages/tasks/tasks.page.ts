@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { ModalController, NavController } from '@ionic/angular';
+import { ModalController, NavController, Platform, AlertController } from '@ionic/angular';
 
 import { Task } from '../../models/task.model';
 
@@ -9,6 +9,7 @@ import { myLeaveAnimation } from '../../animations/leave';
 import { OverlayEventDetail } from '@ionic/core';
 
 import { DataService } from '../../services/data.service'
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tasks',
@@ -18,14 +19,47 @@ import { DataService } from '../../services/data.service'
 export class TasksPage implements OnInit {
 
   public tasks:Task[] = [];
+  backButtonSubscription:any;
 
   constructor(
     public modalController: ModalController,
     public dataService: DataService,
-    private nav: NavController
+    private nav: NavController,
+    private platform: Platform,
+    private alertController : AlertController,
+    private router: Router
     ) { }
 
   ngOnInit() { }
+
+  ngAfterViewInit() {
+    this.backButtonSubscription = this.platform.backButton.subscribe(async () => {
+      if (this.router.url === '/tabs/tasks') {
+        const alert = await this.alertController.create({
+          header: 'Exit app?',
+          buttons: [
+            {
+              text: 'Cancel',
+              cssClass: 'secondary'
+            }, {
+              text: 'Exit',
+              handler: () => {
+                navigator['app'].exitApp();
+              }
+            }
+          ]
+        });
+        await alert.present();
+      }
+      else {
+        this.router.navigate(['/tabs/tasks'])
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.backButtonSubscription.unsubscribe();
+  }
 
   ionViewWillEnter() {  // each time you enter to tab call ionViewWillEnter()
     this.getDataBase();
@@ -36,21 +70,40 @@ export class TasksPage implements OnInit {
       await this.modalController.create({
         component: TaskCreatorComponent,
         componentProps: {
-          "paramID": 123,
-          "paramTitle": "Test Title"
+          "title": "Add Task"
         },
         enterAnimation: myEnterAnimation,
         leaveAnimation: myLeaveAnimation
       });
 
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
-      console.log("ACA TA LA INFO:", detail.data)
-      this.tasks.push(detail.data);
-      this.updateDataBase();
+      if(detail.data){
+        this.tasks.push(detail.data);
+        this.updateDataBase();
+      }
     });
-
     return await modal.present();
+  }
 
+  async editTask(index) {
+    const modal: HTMLIonModalElement =
+      await this.modalController.create({
+        component: TaskCreatorComponent,
+        componentProps: {
+          "title": "Edit Task",
+          "item": this.tasks[index]
+        },
+        enterAnimation: myEnterAnimation,
+        leaveAnimation: myLeaveAnimation
+      });
+
+    modal.onDidDismiss().then((detail: OverlayEventDetail) => {
+      if (detail !== null && detail.data) {
+        this.tasks[index]  = detail.data;
+        this.updateDataBase();
+      }
+    });
+    return await modal.present();
   }
 
   onTaskSelected(index) {
@@ -67,10 +120,6 @@ export class TasksPage implements OnInit {
     });
     this.tasks.splice(index, 1);
     this.updateDataBase();
-  }
-
-  editTask(index) {
-    console.log("Editar tarea:", this.tasks[index].name)
   }
 
   updateDataBase() {

@@ -1,11 +1,14 @@
 <ion-header>
     <ion-toolbar text-center color="primary">
       <ion-title>
-        Task
+        {{title}}
       </ion-title>
+      <ion-buttons slot="end">
+        <ion-icon slot="end" name="trash" *ngIf="editMode"></ion-icon>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
-  
+
   <ion-content padding>
     <ion-grid>
       <ion-row>
@@ -42,8 +45,14 @@
                   </ion-item>
                 </ion-row>
       <ion-row>
+        <ion-col text-center *ngIf="!editMode">
+          <ion-button (click)="addCloseModal()">Add Task</ion-button>
+        </ion-col>
+        <ion-col text-center *ngIf="editMode">
+          <ion-button (click)="addCloseModal()">Update Task</ion-button>
+        </ion-col>
         <ion-col text-center>
-          <ion-button (click)="closeModal()">Add Task</ion-button>
+          <ion-button (click)="cancelCloseModal()">Cancel</ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>

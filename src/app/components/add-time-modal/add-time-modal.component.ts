@@ -30,10 +30,6 @@ export class AddTimeModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log(this.navParams);
-    // console.table(this.navParams);
-    // this.modelId = this.navParams.data.paramID;
-    // this.modalTitle = this.navParams.data.paramTitle;
     this.tittle = this.navParams.data.tittle;
     if(this.navParams.data.item){
       this.editMode = true;
@@ -45,8 +41,8 @@ export class AddTimeModalComponent implements OnInit {
     const onClosedData: any = this.data;
     await this.modalController.dismiss(onClosedData);
   }
+
   async cancelCloseModal() {
-    const onClosedData: any = this.data;
     await this.modalController.dismiss();
   }
 

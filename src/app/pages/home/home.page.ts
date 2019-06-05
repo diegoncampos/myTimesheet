@@ -35,11 +35,6 @@ export class HomePage implements OnInit {
     private activateRoute: ActivatedRoute,
     private dataService: DataService,
     ) {
-    // this.times = [
-    //   {startDate:"01/01/2019", startTime: "2019-04-15T08:00:01.613+12:00", endDate:"2019-04-15T18:00:01.613+12:00", endTime:"2019-04-15T18:00:01.613+12:00", note: "Esto es una nota", open: false},
-    //   {startDate:"02/02/2019", startTime: "2019-04-15T08:15:01.613+12:00", endDate:"2019-04-15T18:00:01.613+12:00", endTime:"2019-04-15T18:15:01.613+12:00", note: "Este dia no trabaje nada!!", open: false},
-    //   {startDate:"03/03/2019", startTime: "2019-04-15T08:30:01.613+12:00", endDate:"2019-04-15T18:00:01.613+12:00", endTime:"2019-04-15T19:58:01.613+12:00", note: "Berni se la come doblada!!", open: false}
-    // ]
 
     this.weekNumber = moment(new Date()).week();
     this.beginningOfWeek = moment().week(this.weekNumber).startOf('week').format('DD/MM/YYYY');
@@ -51,7 +46,7 @@ export class HomePage implements OnInit {
           "year": 2019,
           "week": [
             {
-              "number": 20,
+              "number": 22,
               "times": [
                 { startDate: "2019-03-01T18:00:01.613+12:00", startTime: "2019-04-15T08:00:01.613+12:00", endDate: "2019-04-15T18:00:01.613+12:00", endTime: "2019-04-15T18:00:01.613+12:00", note: "Esto es una nota", open: false },
                 { startDate: "2019-03-02T18:00:01.613+12:00", startTime: "2019-04-15T08:15:01.613+12:00", endDate: "2019-04-15T18:00:01.613+12:00", endTime: "2019-04-15T18:15:01.613+12:00", note: "Este dia no trabaje nada!!", open: false },
@@ -59,7 +54,7 @@ export class HomePage implements OnInit {
               ]
             },
             {
-              "number": 21,
+              "number": 23,
               "times": [
                 { startDate: "2019-04-01T18:00:01.613+12:00", startTime: "2019-04-15T08:00:01.613+12:00", endDate: "2019-04-15T18:00:01.613+12:00", endTime: "2019-04-15T18:00:01.613+12:00", note: "Esto es una nota", open: false },
                 { startDate: "2019-04-02T18:00:01.613+12:00", startTime: "2019-04-15T08:15:01.613+12:00", endDate: "2019-04-15T18:00:01.613+12:00", endTime: "2019-04-15T18:15:01.613+12:00", note: "Este dia no trabaje nada!!", open: false },
@@ -67,7 +62,7 @@ export class HomePage implements OnInit {
               ]
             },
             {
-              "number": 22,
+              "number": 24,
               "times": [
                 { startDate: "2019-05-01T18:00:01.613+12:00", startTime: "2019-04-15T08:00:01.613+12:00", endDate: "2019-04-15T18:00:01.613+12:00", endTime: "2019-04-15T18:00:01.613+12:00", note: "Esto es una nota", open: false },
                 { startDate: "2019-05-05T18:00:01.613+12:00", startTime: "2019-04-15T08:15:01.613+12:00", endDate: "2019-04-15T18:00:01.613+12:00", endTime: "2019-04-15T18:15:01.613+12:00", note: "Este dia no trabaje nada!!", open: false },
