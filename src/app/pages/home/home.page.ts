@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Times } from '../../models/times.model';
 import { ModalController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 
@@ -12,6 +11,10 @@ import { myLeaveAnimation } from '../../animations/leave';
 import * as moment from 'moment';
 import { DataService } from '../../services/data.service'
 
+import { Times } from '../../models/times.model';
+import { Data } from '../../models/data.model';
+import { Week } from '../../models/week.model';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -21,11 +24,10 @@ export class HomePage implements OnInit {
 
   receivedId:any = null;
   taskName:any = null;
-  times:Times[] = [];//{date:"", startTime: "", endTime:"", note: "", task: ""};
-  isOneWeek: boolean;
+  times:Times[] = [];
   playSelected:boolean = false;
 
-  data:any;
+  data:Data[] = [];
   weekNumber: number;
   beginningOfWeek:any;
   endOfWeek:any;
@@ -37,43 +39,45 @@ export class HomePage implements OnInit {
     ) {
 
     this.weekNumber = moment(new Date()).week();
-    this.beginningOfWeek = moment().week(this.weekNumber).startOf('week').format('DD/MM/YYYY');
-    this.endOfWeek = moment().week(this.weekNumber).startOf('week').add(6, 'days').format('DD/MM/YYYY');
 
-    this.data =
-      [
-        {
-          "year": 2019,
-          "week": [
-            {
-              "number": 22,
-              "times": [
-                { startDate: "2019-03-01T18:00:01.613+12:00", startTime: "2019-04-15T08:00:01.613+12:00", endDate: "2019-04-15T18:00:01.613+12:00", endTime: "2019-04-15T18:00:01.613+12:00", note: "Esto es una nota", open: false },
-                { startDate: "2019-03-02T18:00:01.613+12:00", startTime: "2019-04-15T08:15:01.613+12:00", endDate: "2019-04-15T18:00:01.613+12:00", endTime: "2019-04-15T18:15:01.613+12:00", note: "Este dia no trabaje nada!!", open: false },
-                { startDate: "2019-03-03T18:00:01.613+12:00", startTime: "2019-04-15T08:30:01.613+12:00", endDate: "2019-04-15T18:00:01.613+12:00", endTime: "2019-04-15T19:58:01.613+12:00", note: "Berni se la come doblada!!", open: false }
-              ]
-            },
-            {
-              "number": 23,
-              "times": [
-                { startDate: "2019-04-01T18:00:01.613+12:00", startTime: "2019-04-15T08:00:01.613+12:00", endDate: "2019-04-15T18:00:01.613+12:00", endTime: "2019-04-15T18:00:01.613+12:00", note: "Esto es una nota", open: false },
-                { startDate: "2019-04-02T18:00:01.613+12:00", startTime: "2019-04-15T08:15:01.613+12:00", endDate: "2019-04-15T18:00:01.613+12:00", endTime: "2019-04-15T18:15:01.613+12:00", note: "Este dia no trabaje nada!!", open: false },
-                { startDate: "2019-04-03T18:00:01.613+12:00", startTime: "2019-04-15T08:30:01.613+12:00", endDate: "2019-04-15T18:00:01.613+12:00", endTime: "2019-04-15T19:58:01.613+12:00", note: "Berni se la come doblada!!", open: false }
-              ]
-            },
-            {
-              "number": 24,
-              "times": [
-                { startDate: "2019-05-01T18:00:01.613+12:00", startTime: "2019-04-15T08:00:01.613+12:00", endDate: "2019-04-15T18:00:01.613+12:00", endTime: "2019-04-15T18:00:01.613+12:00", note: "Esto es una nota", open: false },
-                { startDate: "2019-05-05T18:00:01.613+12:00", startTime: "2019-04-15T08:15:01.613+12:00", endDate: "2019-04-15T18:00:01.613+12:00", endTime: "2019-04-15T18:15:01.613+12:00", note: "Este dia no trabaje nada!!", open: false },
-                { startDate: "2019-05-07T18:00:01.613+12:00", startTime: "2019-04-15T08:30:01.613+12:00", endDate: "2019-04-15T18:00:01.613+12:00", endTime: "2019-04-15T19:58:01.613+12:00", note: "Berni se la come doblada!!", open: false }
-              ]
-            }
-          ]
-        }
-      ]
+    // this.data =
+    //   [
+    //     {
+    //       "year": 2019,
+    //       "week": [
+    //         {
+    //           "number": 25,
+    //           "times": [
+    //             { startDate: "2019-06-20T18:00:01.613+12:00", startTime: "2019-04-15T08:00:01.613+12:00", endDate: "2019-04-15T18:00:01.613+12:00", endTime: "2019-04-15T18:00:01.613+12:00", note: "Esto es una nota", open: false },
+    //             { startDate: "2019-06-21T18:00:01.613+12:00", startTime: "2019-04-15T08:15:01.613+12:00", endDate: "2019-04-15T18:00:01.613+12:00", endTime: "2019-04-15T18:15:01.613+12:00", note: "Este dia no trabaje nada!!", open: false },
+    //             { startDate: "2019-06-22T18:00:01.613+12:00", startTime: "2019-04-15T08:30:01.613+12:00", endDate: "2019-04-15T18:00:01.613+12:00", endTime: "2019-04-15T19:58:01.613+12:00", note: "Berni se la come doblada!!", open: false }
+    //           ]
+    //         },
+    //         {
+    //           "number": 26,
+    //           "times": [
+    //             { startDate: "2019-06-23T18:00:01.613+12:00", startTime: "2019-04-15T08:00:01.613+12:00", endDate: "2019-04-15T18:00:01.613+12:00", endTime: "2019-04-15T18:00:01.613+12:00", note: "Esto es una nota", open: false },
+    //             { startDate: "2019-06-24T18:00:01.613+12:00", startTime: "2019-04-15T08:15:01.613+12:00", endDate: "2019-04-15T18:00:01.613+12:00", endTime: "2019-04-15T18:15:01.613+12:00", note: "Este dia no trabaje nada!!", open: false },
+    //             { startDate: "2019-06-25T18:00:01.613+12:00", startTime: "2019-04-15T08:30:01.613+12:00", endDate: "2019-04-15T18:00:01.613+12:00", endTime: "2019-04-15T19:58:01.613+12:00", note: "Berni se la come doblada!!", open: false }
+    //           ]
+    //         },
+    //         {
+    //           "number": 27,
+    //           "times": [
+    //             { startDate: "2019-07-03T18:00:01.613+12:00", startTime: "2019-04-15T08:00:01.613+12:00", endDate: "2019-04-15T18:00:01.613+12:00", endTime: "2019-04-15T18:00:01.613+12:00", note: "Esto es una nota", open: false },
+    //             { startDate: "2019-07-02T18:00:01.613+12:00", startTime: "2019-04-15T08:15:01.613+12:00", endDate: "2019-04-15T18:00:01.613+12:00", endTime: "2019-04-15T18:15:01.613+12:00", note: "Este dia no trabaje nada!!", open: false },
+    //             { startDate: "2019-07-01T18:00:01.613+12:00", startTime: "2019-04-15T08:30:01.613+12:00", endDate: "2019-04-15T18:00:01.613+12:00", endTime: "2019-04-15T19:58:01.613+12:00", note: "Berni se la come doblada!!", open: false }
+    //           ]
+    //         }
+    //       ]
+    //     }
+    //   ]
 
-    this.loadWeek(this.weekNumber);
+
+    // this.data[0].week[0].times.push({ startDate: "2019-06-19T18:00:01.613+12:00", startTime: "2019-04-15T08:00:01.613+12:00", endDate: "2019-04-15T18:00:01.613+12:00", endTime: "2019-04-15T18:00:01.613+12:00", note: "Probando push", open: false })
+
+    // this.getDataBase();
+    // this.loadWeek(this.weekNumber);
 
    }
 
@@ -83,7 +87,7 @@ export class HomePage implements OnInit {
   }
 
   ionViewWillEnter() {  // each time you enter to tab call ionViewWillEnter()
-    // this.getDataBase();
+    this.getDataBase();
   }
 
   async addModal() {
@@ -99,16 +103,32 @@ export class HomePage implements OnInit {
 
     modal.onDidDismiss().then((detail: OverlayEventDetail) => {
       if (detail !== null && detail.data) {
+        let addedWeekNumber = moment(detail.data.startDate).week();
         console.log('The result:', detail.data);
-        if (!this.isOneWeek) {
-          this.times.push(detail.data);
-          this.updateDataBase();
-          this.isOneWeekCheck();
+        if(this.checkWeek(addedWeekNumber)){    //The week number exist, add new time
+          let index = this.data[0].week.findIndex(x => x.number == addedWeekNumber);
+          this.data[0].week[index].times.push(detail.data)
         }
+        else {    //The week number does not exist, create new week and add new time
+          this.data[0].week.push({
+            "number": addedWeekNumber,
+            "times": []
+          })
+          let index = this.data[0].week.findIndex(x => x.number == addedWeekNumber);
+          this.data[0].week[index].times.push(detail.data)
+        }
+        this.loadWeek(addedWeekNumber);
+        this.updateDataBase();
       }
     });
 
     return await modal.present();
+  }
+
+  checkWeek(weekNumber):boolean {  //Return true if the week number already exist in this.data
+    let weeks = this.data.filter(x => x.year == 2019)[0] ? this.data.filter(x => x.year == 2019)[0].week : [];
+    let res = weeks.filter(x => x.number == weekNumber)[0] ? true : false;
+    return res;
   }
 
   playTime() {
@@ -132,25 +152,25 @@ export class HomePage implements OnInit {
   getDataBase() {
     this.dataService.get(this.receivedId).then((val) => {
       if (val) {
-        this.times = val;
-        this.isOneWeekCheck();
+        // this.times = val;
+        this.data = val;
+        this.loadWeek(this.weekNumber);
       }
-      console.log("Check:", val)
+      else {
+        let year = parseInt(moment().format('YYYY'));
+        this.data[0] = new Data(year, []);
+      }
+      console.log("Check:", val, this.data)
     })
   }
 
   updateDataBase() {
-    this.dataService.set(this.receivedId, this.times).then((val) => {
+    this.dataService.set(this.receivedId, this.data).then((val) => {
       console.log("Set:", val);
     });
   }
 
-  isOneWeekCheck(){
-    this.isOneWeek = this.times.length === 7;
-  }
-
   async selectedItemToEdit(index) {
-    console.log("ACAAAA", index)
     const modal: HTMLIonModalElement =
       await this.modalController.create({
         component: AddTimeModalComponent,
@@ -174,16 +194,11 @@ export class HomePage implements OnInit {
 
   goToLastWeek() {
     this.weekNumber = this.weekNumber - 1;
-    this.beginningOfWeek = moment().week(this.weekNumber).startOf('week').format('DD/MM/YYYY');
-    this.endOfWeek = moment().week(this.weekNumber).startOf('week').add(6, 'days').format('DD/MM/YYYY');
     this.loadWeek(this.weekNumber)
-    console.log("Week:", this.weekNumber);
   }
 
   goToNextWeek() {
     this.weekNumber = this.weekNumber + 1;
-    this.beginningOfWeek = moment().week(this.weekNumber).startOf('week').format('DD/MM/YYYY');
-    this.endOfWeek = moment().week(this.weekNumber).startOf('week').add(6, 'days').format('DD/MM/YYYY');
     this.loadWeek(this.weekNumber)
     console.log("Week:", this.weekNumber);
   }
@@ -191,9 +206,12 @@ export class HomePage implements OnInit {
   loadWeek(weekNumber){
     let res;
     let weeks;
-    weeks = this.data.filter(x => x.year == '2019')[0].week;
+    weeks = this.data.filter(x => x.year == 2019)[0] ? this.data.filter(x => x.year == 2019)[0].week : [];
     res = weeks.filter(x => x.number == weekNumber)[0];
     this.times = res && res.times ? res.times : [];
+
+    this.beginningOfWeek = moment().week(weekNumber).startOf('week').format('DD/MM/YYYY');
+    this.endOfWeek = moment().week(weekNumber).startOf('week').add(6, 'days').format('DD/MM/YYYY');
   }
 
   swipe(event) {

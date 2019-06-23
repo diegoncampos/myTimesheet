@@ -16,7 +16,6 @@
     <ion-icon slot="icon-only" name="exit" class="stopButtom"></ion-icon>
   </ion-button>
 
-  <!-- <app-collapsible-list [times]="times" (itemSelected)="selectedItemToEdit($event)"></app-collapsible-list> -->
   <div (swipe)="swipe($event)">
     <div class="week-header">
       <ion-row class="calendar-week">
@@ -35,9 +34,7 @@
   </div>
 
 
-  <!-- FIN -->
-
-  <ion-button (click)="addModal()" fill="clear" size="large" *ngIf="!isOneWeek">
+  <ion-button (click)="addModal()" fill="clear" size="large">
     <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
   </ion-button>
 
