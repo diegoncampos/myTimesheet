@@ -74,11 +74,6 @@ export class HomePage implements OnInit {
     //   ]
 
 
-    // this.data[0].week[0].times.push({ startDate: "2019-06-19T18:00:01.613+12:00", startTime: "2019-04-15T08:00:01.613+12:00", endDate: "2019-04-15T18:00:01.613+12:00", endTime: "2019-04-15T18:00:01.613+12:00", note: "Probando push", open: false })
-
-    // this.getDataBase();
-    // this.loadWeek(this.weekNumber);
-
    }
 
   ngOnInit() {
@@ -118,7 +113,7 @@ export class HomePage implements OnInit {
           this.data[0].week[index].times.push(detail.data)
         }
         this.loadWeek(addedWeekNumber);
-        this.updateDataBase();
+        // this.updateDataBase();
       }
     });
 
@@ -129,6 +124,12 @@ export class HomePage implements OnInit {
     let weeks = this.data.filter(x => x.year == 2019)[0] ? this.data.filter(x => x.year == 2019)[0].week : [];
     let res = weeks.filter(x => x.number == weekNumber)[0] ? true : false;
     return res;
+  }
+
+  checkNewDate(addedWeekNumber, date):boolean { // Check if date doesn't exist still in data
+    let week = this.data[0].week.find(x => x.number == addedWeekNumber);
+    let day = week.times.find(x => moment(x.startDate,"DD-MM-YYYY").isSame(moment(date,"DD-MM-YYYY")));
+    return typeof day === "undefined";
   }
 
   playTime() {
